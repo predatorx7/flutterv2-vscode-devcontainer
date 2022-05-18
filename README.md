@@ -9,6 +9,7 @@ extension.
 
 ## Usage
 
+* Install [`ms-azuretools.vscode-docker`](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) extension from vscode marketplace on vscode.
 * Clone this repository `git clone https://github.com/predatorx7/flutterv2-vscode-devcontainer.git`
 * Optionally, Copy all files from here and paste it in your flutter android project's root. 
 * Open it in VS Code `code .`. 
