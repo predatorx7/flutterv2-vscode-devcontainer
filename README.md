@@ -13,12 +13,13 @@ extension.
 * Optionally, Copy all files from here and paste it in your flutter android project's root. 
 * Open it in VS Code `code .`. 
 * Click 'Re-open in container' when prompted
-* Wait for downloads to complete (this can take a while, it downloads java, android SDK
+* Wait for downloads to complete (this can take a while for the first time, it downloads java, android SDK
 and flutter)
-* Once the container has started, you can run `flutter create hello_world` to create a 
-new project
+* Once the container has started, you can run either `flutter create hello_world` to create a 
+new project, clone your source from a repo or work on the files in the mounted workspace if you had copied anything.
 * Running on a physical device is supported with `flutter run`, make sure you click the 
-dialog on the device in order to trust the computer you are connecting from!
+dialog on the device in order to trust the computer you are connecting from! (Don't forget to enable file transfer).
+* On MacOS or Windows, you might have to use wireless debugging if usb doesn't work.
 
 ## Notes
 
