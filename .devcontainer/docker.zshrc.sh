@@ -55,10 +55,10 @@ setopt promptsubst
 #   print -P "$_BATTERY + \e[38;5;85m%~\e[0m"
 # }
 
-# Uncomment if you have a desktop
-# function precmd() {
-#   print -P " + \e[38;5;85m%~\e[0m"
-# }
+# Uncomment if you have a desktop (works well for both laptop & desktops)
+function precmd() {
+  print -P " + \e[38;5;85m%~\e[0m"
+}
 
 PROMPT='%# '
 
@@ -108,4 +108,3 @@ plugins=(
 
 # export PATH="$PATH":"$HOME/snap/flutter/common/flutter/.pub-cache/bin"
 # export PATH="$PATH":"$HOME/.pub-cache/bin"
-

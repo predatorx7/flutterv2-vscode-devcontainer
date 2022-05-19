@@ -32,7 +32,9 @@ RUN apt-get install -y --no-install-recommends \
   # For resource monitoring
   htop \
   # For fish like suggestions
-  zsh-autosuggestions
+  zsh-autosuggestions \
+  nano \
+  sudo
 
 RUN apt-get clean
 
@@ -58,10 +60,10 @@ RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools
 # moving sdk tools to latest folder because sdk manager always complains and 
 # cannot find determine ANDROID SDK's location
 RUN mv cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest
-RUN cd ${ANDROID_SDK_ROOT}/cmdline-tools/bin && yes | ./sdkmanager --sdk_root=${ANDROID_SDK_ROOT} --licenses
+RUN cd ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin && yes | ./sdkmanager --sdk_root=${ANDROID_SDK_ROOT} --licenses
 # You can replace the install targets below with yours (get it from `sdkmanager --sdk_root=$ANDROID_HOME --list_installed`)
-RUN cd ${ANDROID_SDK_ROOT}/cmdline-tools/bin && ./sdkmanager --sdk_root=${ANDROID_SDK_ROOT} "build-tools;33.0.0-rc4" "build-tools;30.0.3" "patcher;v4" "platform-tools" "platforms;android-28" "platforms;android-29" "platforms;android-30" "platforms;android-31"
-ENV PATH "$PATH:${ANDROID_SDK_ROOT}/cmdline-tools/bin:${ANDROID_SDK_ROOT}/platform-tools"
+RUN cd ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin && ./sdkmanager --sdk_root=${ANDROID_SDK_ROOT} "build-tools;33.0.0-rc4" "build-tools;30.0.3" "patcher;v4" "platform-tools" "platforms;android-28" "platforms;android-29" "platforms;android-30" "platforms;android-31"
+ENV PATH "$PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools"
 
 # Prepare flutter directories & variables
 ARG FLUTTER_SDK_URL=https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.5-stable.tar.xz
@@ -88,4 +90,14 @@ RUN flutter precache
 # Create ssh config dir
 RUN mkdir -p -m 0700 ${_DEVELOPER_HOME}/.ssh;
 
+# Copy ZSHRC file
 COPY ./.devcontainer/docker.zshrc.sh ${_DEVELOPER_HOME}/.zshrc
+
+# Setup user sudo permissions
+USER root
+RUN apt-get install nano sudo;
+RUN chown developer:developer ${_DEVELOPER_HOME}/.zshrc
+RUN echo developer:developer | chpasswd;
+RUN adduser developer sudo
+
+USER developer
